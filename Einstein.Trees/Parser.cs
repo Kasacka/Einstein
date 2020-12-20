@@ -42,14 +42,17 @@ namespace Einstein.Trees
             ExpectKeyword("function");
             var name = ExpectIdentifier();
             var parameters = ParseParameterList();
+            var statements = new List<StatementTree>();
             string typeName = null;
             if (IsOperator(':'))
             {
                 Skip();
                 typeName = ExpectIdentifier();
             }
+            while (!IsKeyword("end"))
+                statements.Add(ParseStatement());
             ExpectKeyword("end");
-            return new FunctionTree { Name = name, TypeName = typeName, Parameters = parameters };
+            return new FunctionTree { Name = name, TypeName = typeName, Parameters = parameters, Statements = statements };
         }
 
         private ClassHeader ParseClassHeader()
@@ -89,13 +92,13 @@ namespace Einstein.Trees
                 {
                     firstParameter = false;
                 }
-                parameters.Add(ParseParameterTree());
+                parameters.Add(ParseParameter());
             }
             ExpectOperator(')');
             return parameters;
         }
 
-        private VariableTree ParseParameterTree()
+        private VariableTree ParseVariableEnd()
         {
             var name = ExpectIdentifier();
             ExpectOperator(':');
@@ -105,6 +108,53 @@ namespace Einstein.Trees
                 Name = name,
                 TypeName = typeName
             };
+        }
+
+        private VariableTree ParseParameter()
+        {
+            return ParseVariableEnd();
+        }
+
+        private StatementTree ParseStatement()
+        {
+            if (IsKeyword("let"))
+            {
+                return ParseVariableDeclarationStatementTree();
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        private StatementTree ParseVariableDeclarationStatementTree()
+        {
+            ExpectKeyword("let");
+            var variable = ParseVariableEnd();
+            ExpressionTree expression = null;
+            if (IsOperator('='))
+            {
+                Skip();
+                expression = ParseExpression();
+            }
+            return new VariableDeclarationStatementTree {
+                Variable = variable,
+                Expression = expression
+            };
+        }
+
+        private ExpressionTree ParseExpression()
+        {
+            var value = token.Value;
+            if (IsKeyword("yes") || IsKeyword("no"))
+            {
+                Skip();
+                return new LiteralExpressionTree { 
+                    Type = LiteralExpressionTree.LiteralType.Boolean,
+                    Value = value
+                };
+            }
+            throw new Exception();
         }
 
         private bool IsKeyword(string keyword) =>

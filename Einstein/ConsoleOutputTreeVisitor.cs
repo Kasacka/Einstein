@@ -26,6 +26,11 @@ namespace Einstein
             {
                 Console.WriteLine("VARIABLE " + tree.Name);
             }
+
+            public override void Visit(LiteralExpressionTree tree)
+            {
+                Console.WriteLine("LITERAL " + tree.Value);
+            }
         }
     }
 }

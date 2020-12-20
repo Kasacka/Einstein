@@ -6,7 +6,7 @@ namespace Einstein.Tokens
     {
         private static readonly HashSet<string> keywords = new()
         {
-            "class", "function", "end"
+            "class", "function", "end", "let", "yes", "no"
         };
 
         public static bool IsKeyword(string value) =>

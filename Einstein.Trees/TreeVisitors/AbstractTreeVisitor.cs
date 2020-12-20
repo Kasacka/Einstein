@@ -20,6 +20,14 @@ namespace Einstein.Trees.TreeVisitors
         {
         }
 
+        public virtual void Visit(VariableDeclarationStatementTree tree)
+        {
+        }
+
+        public virtual void Visit(LiteralExpressionTree tree)
+        {
+        }
+
         public virtual void VisitAfter(CompilationUnitTree tree)
         {
         }
@@ -33,6 +41,14 @@ namespace Einstein.Trees.TreeVisitors
         }
 
         public virtual void VisitAfter(VariableTree tree)
+        {
+        }
+
+        public virtual void VisitAfter(VariableDeclarationStatementTree tree)
+        {
+        }
+
+        public virtual void VisitAfter(LiteralExpressionTree tree)
         {
         }
     }

@@ -1,6 +1,7 @@
 using System.Linq;
 using Einstein.Trees;
 using Einstein.Trees.Trees;
+using Einstein.Trees.TreeVisitors;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Einstein.Tests.Trees
@@ -113,6 +114,29 @@ namespace Einstein.Tests.Trees
             Assert.AreEqual("Integer", parameter.TypeName);
             Assert.AreEqual("y", function.Parameters.Last().Name);
             Assert.AreEqual("Float", function.Parameters.Skip(1).First().TypeName);
+        }
+
+        [TestMethod]
+        public void UninitializedVariable_Test()
+        {
+            var tree = Parse("class Person function sing let name: String end end ");
+            var statement = tree.Classes.First().Functions.First().Statements.First();
+            var variableStatement = (VariableDeclarationStatementTree) statement;
+            Assert.AreEqual("name", variableStatement.Variable.Name);
+            Assert.IsNull(variableStatement.Expression);
+        }
+
+        [TestMethod]
+        public void LiteralInitializedVariable_Test()
+        {
+            var tree = Parse("class Person function sing let isTrue:Boolean = yes end end ");
+            var statement = tree.Classes.First().Functions.First().Statements.First();
+            var variableStatement = (VariableDeclarationStatementTree) statement;
+            Assert.AreEqual("isTrue", variableStatement.Variable.Name);
+            Assert.IsTrue(variableStatement.Expression is LiteralExpressionTree);
+            var literal = (LiteralExpressionTree) variableStatement.Expression;
+            Assert.AreEqual(LiteralExpressionTree.LiteralType.Boolean, literal.Type);
+            Assert.AreEqual("yes", literal.Value);
         }
 
         private static CompilationUnitTree Parse(string source)
