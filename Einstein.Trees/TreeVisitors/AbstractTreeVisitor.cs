@@ -28,6 +28,10 @@ namespace Einstein.Trees.TreeVisitors
         {
         }
 
+        public virtual void Visit(BinaryOperatorExpressionTree tree)
+        {
+        }
+
         public virtual void VisitAfter(CompilationUnitTree tree)
         {
         }
@@ -49,6 +53,10 @@ namespace Einstein.Trees.TreeVisitors
         }
 
         public virtual void VisitAfter(LiteralExpressionTree tree)
+        {
+        }
+
+        public virtual void VisitAfter(BinaryOperatorExpressionTree tree)
         {
         }
     }

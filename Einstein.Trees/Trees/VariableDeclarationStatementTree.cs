@@ -6,8 +6,8 @@ namespace Einstein.Trees.Trees
     {
         internal VariableDeclarationStatementTree() {}
 
-        public VariableTree Variable { get; init; }
-        public ExpressionTree Expression { get; init; }
+        public VariableTree Variable { get; internal set; }
+        public ExpressionTree Expression { get; internal set; }
 
         public override void Accept(ITreeVisitor visitor)
         {

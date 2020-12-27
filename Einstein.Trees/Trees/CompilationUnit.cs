@@ -7,7 +7,7 @@ namespace Einstein.Trees.Trees
     {
         internal CompilationUnitTree() {}
 
-        public IEnumerable<ClassTree> Classes { get; init; }
+        public IEnumerable<ClassTree> Classes { get; internal set; }
 
         public void Accept(ITreeVisitor visitor)
         {

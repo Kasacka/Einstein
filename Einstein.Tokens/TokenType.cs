@@ -6,6 +6,7 @@ namespace Einstein.Tokens
         Operator,
         Identifier,
         Unknown,
-        EndOfSource
+        EndOfSource,
+        Number
     }
 }

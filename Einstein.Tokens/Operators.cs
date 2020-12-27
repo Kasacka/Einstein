@@ -6,7 +6,7 @@ namespace Einstein.Tokens
     {
         private static readonly HashSet<char> operators = new()
         {
-            '<', '(', ')', ':', ',', '='
+            '<', '(', ')', ':', ',', '=', '+', '-', '*', '/'
         };
 
         public static bool IsOperator(char value) =>

@@ -10,6 +10,7 @@ namespace Einstein.Trees.TreeVisitors
         void Visit(VariableTree tree);
         void Visit(VariableDeclarationStatementTree tree);
         void Visit(LiteralExpressionTree tree);
+        void Visit(BinaryOperatorExpressionTree tree);
 
         void VisitAfter(CompilationUnitTree tree);
         void VisitAfter(ClassTree tree);
@@ -17,5 +18,6 @@ namespace Einstein.Trees.TreeVisitors
         void VisitAfter(VariableTree tree);
         void VisitAfter(VariableDeclarationStatementTree tree);
         void VisitAfter(LiteralExpressionTree tree);
+        void VisitAfter(BinaryOperatorExpressionTree tree);
     }
 }

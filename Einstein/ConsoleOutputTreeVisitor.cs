@@ -31,6 +31,11 @@ namespace Einstein
             {
                 Console.WriteLine("LITERAL " + tree.Value);
             }
+
+            public override void Visit(BinaryOperatorExpressionTree tree)
+            {
+                Console.WriteLine("BINARY_EXPRESSION" + tree.Type);
+            }
         }
     }
 }

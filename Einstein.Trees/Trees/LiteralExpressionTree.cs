@@ -6,19 +6,13 @@ namespace Einstein.Trees.Trees
     {
         internal LiteralExpressionTree() {}
 
-        public LiteralType Type { get; init; }
-        public string Value { get; init; }
+        public LiteralType Type { get; internal set; }
+        public string Value { get; internal set; }
 
         public override void Accept(ITreeVisitor visitor)
         {
             visitor.Visit(this);
             visitor.VisitAfter(this);
-        }
-
-        public enum LiteralType
-        {
-            Boolean,
-            Number
         }
     }
 }

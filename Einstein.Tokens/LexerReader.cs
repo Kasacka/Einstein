@@ -18,6 +18,9 @@ namespace Einstein.Tokens
         public bool IsLetter =>
             char.IsLetter(Current);
 
+        public bool IsNumber =>
+            Current == '.' || char.IsDigit(Current);
+
         public TokenPosition Position =>
             new(position, row, column);
 

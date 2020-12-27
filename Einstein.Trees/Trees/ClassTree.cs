@@ -7,10 +7,10 @@ namespace Einstein.Trees.Trees
     {
         internal ClassTree() {}
 
-        public string Name { get; init; }
-        public string SuperName { get; init; }
-        public IEnumerable<FunctionTree> Functions { get; init; }
-        public IEnumerable<VariableTree> Parameters { get; init; }
+        public string Name { get; internal set; }
+        public string SuperName { get; internal set; }
+        public IEnumerable<FunctionTree> Functions { get; internal set; }
+        public IEnumerable<VariableTree> Parameters { get; internal set; }
 
         public void Accept(ITreeVisitor visitor)
         {

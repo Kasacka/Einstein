@@ -1,5 +1,5 @@
 class Person
     function sing
-        let isTrue: Boolean = yes
+        let isTrue: Integer = 4 + 12
     end
 end 

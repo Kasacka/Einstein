@@ -1,5 +1,6 @@
 using Einstein.Tokens;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -11,13 +12,13 @@ namespace Einstein.Tests.Tokens
         [TestMethod]
         public void EmptyStringTest()
         {
-            TestLexer(string.Empty, new TokenType[0]);
+            TestLexer(string.Empty, Array.Empty<TokenType>());
         }
 
         [TestMethod]
         public void WhiteSpaceTest()
         {
-            TestLexer("  \r \t ", new TokenType[0]);
+            TestLexer("  \r \t ", Array.Empty<TokenType>());
         }
 
         [TestMethod]
@@ -36,7 +37,42 @@ namespace Einstein.Tests.Tokens
             });
         }
 
-        private void TestLexer(string source, IEnumerable<TokenType> expectedTypes)
+        [TestMethod]
+        public void IntegerNumberTest()
+        {
+            TestLexer(" 45 456  ", new TokenType[] {
+                TokenType.Number,
+                TokenType.Number
+            });
+        }
+
+        [TestMethod]
+        public void FloatNumberTest()
+        {
+            TestLexer(" 12.4  34.43 88.4 ", new TokenType[] {
+                TokenType.Number,
+                TokenType.Number,
+                TokenType.Number
+            });
+        }
+
+        [TestMethod]
+        public void TrailingDotFloatNumberTest()
+        {
+            TestLexer(" 12. ", new TokenType[] {
+                TokenType.Number
+            });
+        }
+
+        [TestMethod]
+        public void LeadingDotFloatNumberTest()
+        {
+            TestLexer(" .4 ", new TokenType[] {
+                TokenType.Number
+            });
+        }
+
+        private static void TestLexer(string source, IEnumerable<TokenType> expectedTypes)
         {
             var lexer = new Lexer(source);
             var tokens = new List<Token>();

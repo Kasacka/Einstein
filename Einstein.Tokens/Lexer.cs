@@ -19,7 +19,9 @@ namespace Einstein.Tokens
             if (reader.ReachedEnd)
                 return CreateEndOfSourceToken();
             if (reader.IsLetter)
-                return ReadKeywordOrIdentifier();
+                return ReadKeywordOrIdentifierToken();
+            if (reader.IsNumber)
+                return ReadNumberToken();
             if (Operators.IsOperator(reader.Current))
                 return ReadOperatorToken();
             return ReadUnknownToken();
@@ -28,12 +30,30 @@ namespace Einstein.Tokens
         private void SkipWhite() =>
             reader.ReadWhile(char.IsWhiteSpace);
 
-        private Token ReadKeywordOrIdentifier()
+        private Token ReadKeywordOrIdentifierToken()
         {
             var identifier = reader.ReadWhile(char.IsLetterOrDigit);
             if (Keywords.IsKeyword(identifier.Value))
                 return CreateKeyword(identifier);
             return CreateIdentifier(identifier);
+        }
+
+        private Token ReadNumberToken()
+        {
+            var position = reader.Position;
+            var dotRead = false;
+            var value = reader.ReadWhile(current =>
+            {
+                if (char.IsDigit(current))
+                    return true;
+                if (!dotRead && current == '.')
+                {
+                    dotRead = true;
+                    return true;
+                }
+                return false;
+            });
+            return ToToken(value, TokenType.Number);
         }
 
         private Token ReadOperatorToken()

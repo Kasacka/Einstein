@@ -1,7 +1,6 @@
 using System.Linq;
 using Einstein.Trees;
 using Einstein.Trees.Trees;
-using Einstein.Trees.TreeVisitors;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Einstein.Tests.Trees
@@ -135,8 +134,26 @@ namespace Einstein.Tests.Trees
             Assert.AreEqual("isTrue", variableStatement.Variable.Name);
             Assert.IsTrue(variableStatement.Expression is LiteralExpressionTree);
             var literal = (LiteralExpressionTree) variableStatement.Expression;
-            Assert.AreEqual(LiteralExpressionTree.LiteralType.Boolean, literal.Type);
+            Assert.AreEqual(LiteralType.Boolean, literal.Type);
             Assert.AreEqual("yes", literal.Value);
+        }
+
+        [TestMethod]
+        public void SimplePlus_Test()
+        {
+            var tree = Parse(@"class Person
+                function sing
+                    let isTrue: Integer = 4 + 12
+                end
+            end  ");
+            var statement = tree.Classes.First().Functions.First().Statements.First();
+            var variableStatement = (VariableDeclarationStatementTree) statement;
+            var expression = (BinaryOperatorExpressionTree) variableStatement.Expression;
+            var left = (LiteralExpressionTree) expression.LeftHandSide;
+            var right = (LiteralExpressionTree) expression.RightHandSide;
+            Assert.AreEqual("4", left.Value);
+            Assert.AreEqual("12", right.Value);
+            Assert.AreEqual(LiteralType.Number, left.Type);
         }
 
         private static CompilationUnitTree Parse(string source)

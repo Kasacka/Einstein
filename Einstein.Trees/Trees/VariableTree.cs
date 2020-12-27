@@ -6,8 +6,8 @@ namespace Einstein.Trees.Trees
     {
         internal VariableTree() {}
 
-        public string Name { get; init; }
-        public string TypeName { get; init; }
+        public string Name { get; internal set; }
+        public string TypeName { get; internal set; }
 
         public void Accept(ITreeVisitor visitor)
         {

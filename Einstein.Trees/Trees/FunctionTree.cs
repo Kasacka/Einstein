@@ -7,10 +7,10 @@ namespace Einstein.Trees.Trees
     {
         internal FunctionTree() {}
 
-        public string Name { get; init; }
-        public string TypeName { get; init; }
-        public IEnumerable<VariableTree> Parameters { get; init; }
-        public IEnumerable<StatementTree> Statements { get; init; }
+        public string Name { get; internal set; }
+        public string TypeName { get; internal set; }
+        public IEnumerable<VariableTree> Parameters { get; internal set; }
+        public IEnumerable<StatementTree> Statements { get; internal set; }
 
         public void Accept(ITreeVisitor visitor)
         {
